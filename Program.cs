@@ -82,10 +82,15 @@ namespace Airport
 
 
                 bool userEnterIsInt = int.TryParse(Console.ReadLine(), out userEnter);
+                if (!userEnterIsInt)
+                {
+                    Console.WriteLine("Press Enter and Enter number from 1 to 8");
+                    Console.ReadLine();
+                }
+                Console.Clear();
                 switch (userEnter)
                 {
                     case 1:
-                        Console.Clear();
                         foreach (var item in flight)
                         {
                             Console.WriteLine(item);
@@ -95,6 +100,12 @@ namespace Airport
                         Console.ResetColor();
                         int editNumber;
                         bool isIntNumber = int.TryParse(Console.ReadLine(), out editNumber);
+                        if(!isIntNumber)
+                        {
+                            Console.WriteLine("You entered incorrect data. Press the Enter - to return to the menu.");                      
+                            Console.ReadLine();
+                            break;
+                        }
                         if (editNumber <= flight.Length)
                         {
                             int position = -1;
@@ -137,6 +148,11 @@ if No - press n");
 6.Canceled");
                             int status;
                             bool isIntStatus = int.TryParse(Console.ReadLine(), out status);
+                            if (!isIntStatus)
+                            {
+                                Console.WriteLine("Press Enter and Enter number from 1 to 6");
+                                Console.ReadLine();
+                            }
                             do
                             {
                                 switch (status)
@@ -196,20 +212,16 @@ if No - press n");
 
                         break;
                     case 2:
-                        Console.Clear();
                         foreach (var item in flight)
-                        {
-                            bool b = false;
-                            if (item.FlightStatus == FlightStatus.Canceled)
+                        {                            
+                            if (item.FlightStatus != FlightStatus.Canceled)
                             {
-                                b = true;
+                                Console.WriteLine(item);
                             }
-                            if (!b) Console.WriteLine(item);
                         }
                         Console.ReadLine();
                         break;
                     case 3:
-                        Console.Clear();
                         foreach (var item in flight)
                         {
                             Console.WriteLine(item);
@@ -219,14 +231,19 @@ if No - press n");
                     case 4:
                         int countNumber = 0;
                         int countFlight = 0;
-                        Console.Clear();
                         Console.WriteLine("Enter Flight number:");
-                        int UserNumber;
-                        bool isInt = int.TryParse(Console.ReadLine(), out UserNumber);
+                        int userNumber;
+                        bool isInt = int.TryParse(Console.ReadLine(), out userNumber);
+                        if (!isInt)
+                        {
+                            Console.WriteLine("You entered incorrect data. Press the Enter - to return to the menu.");
+                            Console.ReadLine();
+                            break;
+                        }
                         Console.Clear();
                         foreach (var item in flight)
                         {
-                            if (item.Number == UserNumber && UserNumber != 0)
+                            if (item.Number == userNumber && userNumber != 0)
                             {
                                 countNumber++;
                                 countFlight = countNumber;
@@ -243,7 +260,6 @@ if No - press n");
                     case 5:
                         int countNumberTime = 0;
                         int countFlightTime = 0;
-                        Console.Clear();
                         Console.WriteLine("Enter search date and time arrival from (dd,mm,yyyy hh:mm:ss)");
                         DateTime dateStart = DateTime.Parse(Console.ReadLine());
                         Console.WriteLine("Enter search date and time arrival to (dd,mm,yyyy hh:mm:ss)");
@@ -269,13 +285,12 @@ if No - press n");
                     case 6:
                         int count = 0;
                         int countCity = 0;
-                        Console.Clear();
                         Console.WriteLine("Enter City:");
-                        string UserCity = Console.ReadLine();
+                        string userCity = Console.ReadLine();
                         Console.Clear();
                         foreach (var item in flight)
                         {
-                            if (item.City == UserCity && UserCity != null)
+                            if (item.City == userCity)
                             {
                                 count++;
                                 countCity = count;
@@ -285,14 +300,13 @@ if No - press n");
                         Console.WriteLine($"Found {countCity} flights !");
                         if (countCity == 0)
                         {
-                            Console.WriteLine($"Flight with city {UserCity} not found");
+                            Console.WriteLine($"Flight with city {userCity} not found");
                         }
                         Console.ReadLine();
                         break;
                     case 7:
                         int countNumberNowTime = 0;
                         int countFlightNowTime = 0;
-                        Console.Clear();
                         foreach (var item in flight)
                         {
                             if (item.Arrival == now)
@@ -311,14 +325,6 @@ if No - press n");
                         break;
                 }
             } while (userEnter < 8);
-            //public static void returnMenu()
-            //{
-            //    Console.BackgroundColor = ConsoleColor.White;
-            //    Console.ForegroundColor = ConsoleColor.DarkRed;
-            //    Console.WriteLine("\n\nTo return to the menu press enter !!!");
-            //    Console.ReadLine();
-            //    Console.ResetColor();         
-            //}
         }
     }   
  }
